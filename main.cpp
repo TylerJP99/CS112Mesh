@@ -1,12 +1,8 @@
 
-=======
 #include <igl/opengl/glfw/Viewer.h>
 #include <igl/readPLY.h>
-<<<<<<< HEAD
->>>>>>> 899536b38edb22e24e0cd0176bc56738111f37ea
-=======
 #include <igl/decimate.h>
->>>>>>> 7b0ad1c591be9f4e7b5f934120f3138f023bdbc8
+
 
 Eigen::MatrixXd V, OV;
 Eigen::MatrixXi F, OF;
