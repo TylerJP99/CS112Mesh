@@ -1,4 +1,6 @@
 #include "igl/opengl/glfw/Viewer.h"
+#include <readPLY.h>
+#include <write_triangle_mesh.h>
 
 int main(int argc, char *argv[])
 {
