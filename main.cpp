@@ -1,13 +1,10 @@
-
 #include <igl/opengl/glfw/Viewer.h>
 #include <igl/readPLY.h>
 #include <igl/decimate.h>
 
-<<<<<<< HEAD
+#include <igl/collapse_edge.h>
 #include <igl/edges.h>
 #include <igl/min_heap.h>
-=======
->>>>>>> 3f3410a5ab0327f2b0f3b70df5fdcc8b2f220231
 
 Eigen::MatrixXd V, OV;
 Eigen::MatrixXi F, OF;
@@ -18,7 +15,7 @@ Eigen::Matrix<int, Eigen::Dynamic, 2> E;
 
 void computeOptimalContract(
   std::vector<std::pair<Eigen::MatrixXd, int>> Qs,
-  Eigen::Matrix<int, Eigen::Dynamic, 2> E)
+  Eigen::Matrix<int, Eigen::Dynamic, 2>& E)
 {
   
   Eigen::Vector4d Vhat, I(0,0,0,1);
@@ -154,7 +151,7 @@ void reset(igl::opengl::glfw::Viewer& viewer)
 int main(int argc, char *argv[])
 {
   // Loads our Bunny mesh
-  igl::readPLY("C:/Users/Donny/OneDrive/Documents/GitHub/CS112MESH/bunny10k.ply", OV, OF);
+  igl::readPLY("~/bunny10k.ply", OV, OF);
   igl::opengl::glfw::Viewer viewer;
 
   // Plot the mesh
@@ -178,7 +175,8 @@ int main(int argc, char *argv[])
         break;
       case '2':
         igl::edges(F, E);
-
+        computeOptimalContract(computeQ(V,F), E);
+        // Colapse_Edge
       default: return false;
     }
 
