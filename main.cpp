@@ -1,9 +1,13 @@
+
 #include <igl/opengl/glfw/Viewer.h>
 #include <igl/readPLY.h>
 #include <igl/decimate.h>
 
+<<<<<<< HEAD
 #include <igl/edges.h>
 #include <igl/min_heap.h>
+=======
+>>>>>>> 3f3410a5ab0327f2b0f3b70df5fdcc8b2f220231
 
 Eigen::MatrixXd V, OV;
 Eigen::MatrixXi F, OF;

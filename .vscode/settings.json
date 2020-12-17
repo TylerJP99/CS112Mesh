@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "files.associations": {
         "utility": "cpp",
         "algorithm": "cpp",
@@ -72,4 +73,7 @@
         "xtree": "cpp",
         "xutility": "cpp"
     }
+=======
+    "C_Cpp.dimInactiveRegions": true
+>>>>>>> 3f3410a5ab0327f2b0f3b70df5fdcc8b2f220231
 }
