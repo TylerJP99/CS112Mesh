@@ -84,6 +84,29 @@ void edge_Collapse(
     F = NF;
   }
 
+void Decimate(Eigen::MatrixXd &V, Eigen::MatrixXi &F, int m_f){
+  std::tuple<double, int , int> p;
+  std::tuple<double,Eigen::Vector4d,int> Vh;
+  std::pair<int, int> e;
+  Eigen::Vector4d vh;
+
+  while (true){
+    if (F.rows() <= m_f){
+      break;
+    }
+    else{
+      p = Q.top();
+      Vh = Vhats.top();
+      Q.pop();
+      Vhats.pop();
+      e.first = std::get<1>(p);
+      e.second = std::get<2>(p);
+      vh = std::get<1>(Vh);
+      edge_Collapse(V,F,vh,e);
+    }
+  }
+}
+
 void computeOptimalContract(
   std::vector<std::pair<Eigen::MatrixXd, int>> Qs,
   Eigen::Matrix<int, Eigen::Dynamic, 2>& E)
@@ -130,7 +153,7 @@ void computeOptimalContract(
     cry(3,4) = 1;
 
     Vhat = cry.inverse()*I;
-    float cost = Vhat.transpose() * Qhat * Vhat;
+    double cost = Vhat.transpose() * Qhat * Vhat;
 
     Q.emplace(cost, e1, e2);
     Vhats.emplace(cost, Vhat, 0);
