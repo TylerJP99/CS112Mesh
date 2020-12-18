@@ -14,6 +14,76 @@ igl::min_heap<std::tuple<double, int , int>> Q;
 igl::min_heap<std::tuple<double,Eigen::Vector4d,int>> Vhats;
 Eigen::Matrix<int, Eigen::Dynamic, 2> E;
 
+void edge_Collapse(
+  Eigen::MatrixXd &V, Eigen::MatrixXi &F,
+  Eigen::Vector4d Vh, std::pair<int, int> e)
+  {
+
+    Eigen::MatrixXd NV;
+    Eigen::MatrixXi NF;
+    int r = 0;
+    int vi;
+    bool newV_added = false;
+    Eigen::Vector3d vh = Vh.head<3>();
+    NV.resize(V.rows()-1, 3);
+    NF.resize(F.rows()-2, 3);
+
+    for (unsigned int i = 0; i < V.rows(); i++){
+      if (i==e.first || i==e.second){
+        if (newV_added){
+
+        }
+        else{
+          NV.row(r) = vh;
+          vi = r;
+          r++;
+        }
+      }
+      else{
+        NV.row(r) = V.row(i);
+        r++;
+      }
+    }
+    int r = 0;
+
+    for (unsigned int i = 0; i < F.rows(); i++){
+      if ((F(i, 0)==e.first && F(i, 1)==e.second)
+      || (F(i, 0)==e.second && F(i, 1)==e.first)
+      || (F(i, 0)==e.first && F(i, 2)==e.second)
+      || (F(i, 0)==e.second && F(i, 2)==e.first)
+      || (F(i, 1)==e.first && F(i, 2)==e.second)
+      || (F(i, 1)==e.second && F(i, 2)==e.first))
+      {
+
+      }
+      else if ((F(i, 0)==e.first || F(i, 0)==e.second)
+      || (F(i, 1)==e.first || F(i, 1)==e.second)
+      || (F(i, 2)==e.first || F(i, 2)==e.second)){
+        if ((F(i, 0)==e.first || F(i, 0)==e.second)){
+          NF.row(r) = F.row(i);
+          NF(r, 0) = vi;
+          r++;
+        }
+        if ((F(i, 1)==e.first || F(i, 1)==e.second)){
+          NF.row(r) = F.row(i);
+          NF(r, 1) = vi;
+          r++;
+        }
+        if ((F(i, 2)==e.first || F(i, 2)==e.second)){
+          NF.row(r) = F.row(i);
+          NF(r, 2) = vi;
+          r++;
+        }
+      }
+      else{
+        NF.row(r) = F.row(i);
+        r++;
+      }
+    }
+    V = NV;
+    F = NF;
+  }
+
 void computeOptimalContract(
   std::vector<std::pair<Eigen::MatrixXd, int>> Qs,
   Eigen::Matrix<int, Eigen::Dynamic, 2>& E)
