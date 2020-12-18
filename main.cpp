@@ -95,6 +95,8 @@ void Decimate(Eigen::MatrixXd &V, Eigen::MatrixXi &F, int m_f){
       break;
     }
     else{
+      igl::edges(F, E);
+      computeOptimalContract(computeQ(V,F), E);
       p = Q.top();
       Vh = Vhats.top();
       Q.pop();
