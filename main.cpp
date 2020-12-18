@@ -11,6 +11,7 @@ Eigen::MatrixXi F, OF;
 Eigen::VectorXi j;
 
 igl::min_heap<std::tuple<double, int , int>> Q;
+igl::min_heap<std::tuple<double,Eigen::Vector4d,int>> Vhats;
 Eigen::Matrix<int, Eigen::Dynamic, 2> E;
 
 void computeOptimalContract(
@@ -62,6 +63,7 @@ void computeOptimalContract(
     float cost = Vhat.transpose() * Qhat * Vhat;
 
     Q.emplace(cost, e1, e2);
+    Vhats.emplace(cost, Vhat, 0);
   }
 }
 
