@@ -298,3 +298,4 @@ int main(int argc, char *argv[])
   viewer.callback_key_down = key_down;
   viewer.launch();
 }
+
