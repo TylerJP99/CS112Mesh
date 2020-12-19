@@ -205,7 +205,6 @@ std::vector<std::pair<Eigen::MatrixXd, int>> computeQ(Eigen::MatrixXd& V, Eigen:
     }
     Qs.push_back(std::pair<Eigen::MatrixXd, int>(Q, i));
   }
-
   return Qs;
 }
 
