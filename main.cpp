@@ -34,6 +34,7 @@ void edge_Collapse(
 
         }
         else{
+          newV_added = true;
           NV.row(r) = vh;
           vi = r;
           r++;
