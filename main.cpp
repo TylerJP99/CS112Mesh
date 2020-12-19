@@ -223,7 +223,6 @@ std::vector<std::pair<Eigen::MatrixXd, int>> computeQ(Eigen::MatrixXd& V, Eigen:
     }
     Qs.push_back(std::pair<Eigen::MatrixXd, int>(Q, i));
   }
-
   return Qs;
 }
 
@@ -319,7 +318,7 @@ int main(int argc, char *argv[])
         reset(viewer);
         break;
       case '1':
-        igl::decimate(V, F, F.size() * .20, V, F, j);
+        igl::decimate(V, F, F.rows() * .20, V, F, j);
         updateViewer(viewer);
         break;
       case '2':
@@ -336,3 +335,4 @@ int main(int argc, char *argv[])
   viewer.callback_key_down = key_down;
   viewer.launch();
 }
+
