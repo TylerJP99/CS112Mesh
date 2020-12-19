@@ -91,7 +91,7 @@ void Decimate(Eigen::MatrixXd &V, Eigen::MatrixXi &F, int m_f){
   std::pair<int, int> e;
   Eigen::Vector4d vh;
 
-  while (true){
+  while(true){
     if (F.rows() <= m_f){
       break;
     }
