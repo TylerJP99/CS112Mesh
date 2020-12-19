@@ -90,9 +90,12 @@ void Decimate(Eigen::MatrixXd &V, Eigen::MatrixXi &F, int m_f){
   std::pair<Eigen::Vector4d, int> Vh;
   std::pair<int, int> e;
   Eigen::Vector4d vh;
-
+  int m = 0;
   while(true){
     if (F.rows() <= m_f){
+      break;
+    }
+    else if (m==10000){
       break;
     }
     else{
@@ -114,6 +117,7 @@ void Decimate(Eigen::MatrixXd &V, Eigen::MatrixXi &F, int m_f){
       vh = Vh.first;
       edge_Collapse(V,F,vh,e);
     }
+  m++;
   }
 }
 
