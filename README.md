@@ -1,13 +1,6 @@
-# libigl example project
+# CS 112 Final Project
 
-A blank project example showing how to use libigl and cmake. Feel free and
-encouraged to copy or fork this project as a way of starting a new personal
-project using libigl.
-
-## See the tutorial first
-
-Then build, run and understand the [libigl
-tutorial](http://libigl.github.io/libigl/tutorial/).
+Before compiling, you must change the bunny_path in main.cpp to the absolute path of your own directory where the bunny10k.ply file exists. A example is there.
 
 ## Dependencies
 
@@ -30,10 +23,14 @@ Compile this project using the standard cmake routine:
 
 This should find and build the dependencies and create a `example_bin` binary.
 
+Or, for window users make does not exist so visual studio is needed. To compile for windows, go into the build directory, find a file name example.sln and open it with visual studio. Change the build to release then build solution.
+
 ## Run
 
 From within the `build` directory just issue:
 
     ./example
 
-A glfw app should launch displaying a 3D cube.
+For window users, the result should be an executable "example.exe" in the release folder in the build directory.
+
+A glfw app should launch displaying a 10k triangles bunny.
