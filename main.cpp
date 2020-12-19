@@ -271,8 +271,8 @@ int main(int argc, char *argv[])
         updateViewer(viewer);
         break;
       case '2':
-        igl::edges(F, E);
-        computeOptimalContract(computeQ(V,F), E);
+        Decimate(V, F, F.size() * .20);
+        updateViewer(viewer);
         // Colapse_Edge
       default: return false;
     }
