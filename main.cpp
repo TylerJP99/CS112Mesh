@@ -64,12 +64,12 @@ void edge_Collapse(
           NF(r, 0) = vi;
           r++;
         }
-        if ((F(i, 1)==e.first || F(i, 1)==e.second)){
+        else if ((F(i, 1)==e.first || F(i, 1)==e.second)){
           NF.row(r) = F.row(i);
           NF(r, 1) = vi;
           r++;
         }
-        if ((F(i, 2)==e.first || F(i, 2)==e.second)){
+        else if ((F(i, 2)==e.first || F(i, 2)==e.second)){
           NF.row(r) = F.row(i);
           NF(r, 2) = vi;
           r++;
