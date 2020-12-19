@@ -45,7 +45,7 @@ void edge_Collapse(
         r++;
       }
     }
-    int r = 0;
+    r = 0;
 
     for (unsigned int i = 0; i < F.rows(); i++){
       if ((F(i, 0)==e.first && F(i, 1)==e.second)
@@ -85,41 +85,6 @@ void edge_Collapse(
     F = NF;
   }
 
-void Decimate(Eigen::MatrixXd &V, Eigen::MatrixXi &F, int m_f){
-  std::tuple<double, int , int> p;
-  std::pair<Eigen::Vector4d, int> Vh;
-  std::pair<int, int> e;
-  Eigen::Vector4d vh;
-  int m = 0;
-  while(true){
-    if (F.rows() <= m_f){
-      break;
-    }
-    else if (m==10000){
-      break;
-    }
-    else{
-      igl::edges(F, E);
-      computeOptimalContract(computeQ(V,F), E);
-      if (Q.size()==0){
-        break;
-      }
-      p = Q.top();
-      Q.pop();
-      for (unsigned int i = 0; i<Vhats.size(); i++){
-        if (Vhats[i].second == std::get<1>(p)){
-          Vh = Vhats[i];
-          break;
-        }
-      }
-      e.first = E(std::get<1>(p), 0);
-      e.second = E(std::get<1>(p), 1);
-      vh = Vh.first;
-      edge_Collapse(V,F,vh,e);
-    }
-  m++;
-  }
-}
 
 void computeOptimalContract(
   std::vector<std::pair<Eigen::MatrixXd, int>> Qs,
@@ -242,6 +207,42 @@ std::vector<std::pair<Eigen::MatrixXd, int>> computeQ(Eigen::MatrixXd& V, Eigen:
   }
 
   return Qs;
+}
+
+void Decimate(Eigen::MatrixXd &V, Eigen::MatrixXi &F, int m_f){
+  std::tuple<double, int , int> p;
+  std::pair<Eigen::Vector4d, int> Vh;
+  std::pair<int, int> e;
+  Eigen::Vector4d vh;
+  int m = 0;
+  while(true){
+    if (F.rows() <= m_f){
+      break;
+    }
+    else if (m==10000){
+      break;
+    }
+    else{
+      igl::edges(F, E);
+      computeOptimalContract(computeQ(V,F), E);
+      if (Q.size()==0){
+        break;
+      }
+      p = Q.top();
+      Q.pop();
+      for (unsigned int i = 0; i<Vhats.size(); i++){
+        if (Vhats[i].second == std::get<1>(p)){
+          Vh = Vhats[i];
+          break;
+        }
+      }
+      e.first = E(std::get<1>(p), 0);
+      e.second = E(std::get<1>(p), 1);
+      vh = Vh.first;
+      edge_Collapse(V,F,vh,e);
+    }
+  m++;
+  }
 }
 
 void updateViewer(igl::opengl::glfw::Viewer& viewer)
