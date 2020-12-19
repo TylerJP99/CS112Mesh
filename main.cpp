@@ -11,7 +11,7 @@ Eigen::MatrixXi F, OF;
 Eigen::VectorXi j;
 
 igl::min_heap<std::tuple<double, int , int>> Q;
-igl::min_heap<std::tuple<double,Eigen::Vector4d,int>> Vhats;
+std::vector<std::pair<Eigen::Vector4d, int>> Vhats;
 Eigen::Matrix<int, Eigen::Dynamic, 2> E;
 
 void edge_Collapse(
@@ -87,7 +87,7 @@ void edge_Collapse(
 
 void Decimate(Eigen::MatrixXd &V, Eigen::MatrixXi &F, int m_f){
   std::tuple<double, int , int> p;
-  std::tuple<double,Eigen::Vector4d,int> Vh;
+  std::pair<Eigen::Vector4d, int> Vh;
   std::pair<int, int> e;
   Eigen::Vector4d vh;
 
@@ -102,12 +102,16 @@ void Decimate(Eigen::MatrixXd &V, Eigen::MatrixXi &F, int m_f){
         break;
       }
       p = Q.top();
-      Vh = Vhats.top();
       Q.pop();
-      Vhats.pop();
-      e.first = std::get<1>(p);
-      e.second = std::get<2>(p);
-      vh = std::get<1>(Vh);
+      for (unsigned int i = 0; i<Vhats.size(); i++){
+        if (Vhats[i].second == std::get<1>(p)){
+          Vh = Vhats[i];
+          break;
+        }
+      }
+      e.first = E(std::get<1>(p), 0);
+      e.second = E(std::get<1>(p), 1);
+      vh = Vh.first;
       edge_Collapse(V,F,vh,e);
     }
   }
@@ -161,8 +165,11 @@ void computeOptimalContract(
     Vhat = cry.inverse()*I;
     double cost = Vhat.transpose() * Qhat * Vhat;
 
-    Q.emplace(cost, e1, e2);
-    Vhats.emplace(cost, Vhat, 0);
+    Q.emplace(cost, i, 0);
+    std::pair<Eigen::Vector4d, int> vh;
+    vh.first = Vhat;
+    vh.second = i;
+    Vhats.push_back(vh);
   }
 }
 
